@@ -1,0 +1,12 @@
+find . -type d -exec sh -c 'echo -n "{} "; find {} -type f | wc -l' \;
+
+# Allows one to list file count for every folder
+
+EX:
+. 993
+./train 800
+./train/images 400
+./train/labels 400
+./val 192
+./val/images 96
+./val/labels 96

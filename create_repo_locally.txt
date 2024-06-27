@@ -1,0 +1,8 @@
+1. make a repository (X) on github
+2. cd into the X locally
+3. git init
+4. git add . (assuming you wanna put in everything)
+5. git commit -m 'message'
+6. git remote add origin https://github.com/aymuos15/X.git
+7. git remote set-url origin git@github.com:aymuos15/SOLOv2-3D.git
+8. git push -u origin master

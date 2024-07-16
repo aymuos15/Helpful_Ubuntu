@@ -1,7 +1,8 @@
 import re
 import subprocess
+import sys
 
-def find_process_with_max_gpu_memory():
+def find_processes_with_max_gpu_memory(n):
     # Run nvidia-smi command to get GPU processes
     result = subprocess.run(['nvidia-smi', '-q', '-x'], capture_output=True, text=True)
     if result.returncode != 0:
@@ -22,9 +23,11 @@ def find_process_with_max_gpu_memory():
         elif '</process_info>' in line:
             processes.append(process_info)
 
-    # Find process with max GPU memory usage
-    max_memory_process = max(processes, key=lambda x: x.get('used_memory', 0))
-    return max_memory_process
+    # Sort processes by GPU memory usage in descending order
+    processes.sort(key=lambda x: x.get('used_memory', 0), reverse=True)
+
+    # Return top n processes
+    return processes[:n]
 
 def kill_process(pid):
     # Kill the process using its PID
@@ -35,9 +38,21 @@ def kill_process(pid):
         print("Process with PID", pid, "successfully terminated.")
 
 if __name__ == "__main__":
-    # Find process with max GPU memory
-    max_memory_process = find_process_with_max_gpu_memory()
-    if max_memory_process:
-        print("Process with PID", max_memory_process['pid'], "has the highest GPU memory usage:", max_memory_process['used_memory'], "MiB.")
-        # Kill the process
-        kill_process(max_memory_process['pid'])
+    # Check if the number of processes to kill is provided as an argument
+    if len(sys.argv) != 2:
+        print("Usage: python script.py <number_of_processes_to_kill>")
+        sys.exit(1)
+
+    try:
+        n = int(sys.argv[1])
+    except ValueError:
+        print("Error: The argument must be an integer.")
+        sys.exit(1)
+
+    # Find processes with max GPU memory
+    processes_to_kill = find_processes_with_max_gpu_memory(n)
+    if processes_to_kill:
+        for process in processes_to_kill:
+            print("Process with PID", process['pid'], "has GPU memory usage:", process['used_memory'], "MiB.")
+            # Kill the process
+            kill_process(process['pid'])

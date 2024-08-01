@@ -1,6 +1,18 @@
-#After Installing.
+To create a keyboard shortcut to launch Warp using Ctrl + Alt + T on Ubuntu, follow these steps:
 
-1. Go to terminal -> "which warp-terminal"
-2. Go to Settings and Keyboard Shortcuts
-3. New Shortcut
-4. the result of step number 1. is your command
+Open Keyboard Settings:
+
+Go to the system settings by clicking on the gear icon in the top-right corner of your screen and selecting "Settings".
+In the settings window, navigate to "Keyboard".
+Add a Custom Shortcut:
+
+Scroll down to the "Custom Shortcuts" section and click the "+" button to add a new custom shortcut.
+Configure the Shortcut:
+
+Name: Enter a name for your shortcut, e.g., "Launch Warp".
+Command: Enter the command to launch Warp. This should be the path to the Warp executable. Find this using: `which warp-terminal`
+Shortcut: Click on "Set Shortcut", then press the keys Ctrl + Alt + L.
+
+Save the Shortcut:
+
+After setting the shortcut, click "Add" to save it.

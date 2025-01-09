@@ -1,0 +1,5 @@
+for d in $(find . -type d); do
+    echo "$d:"
+    ls -1 "$d" | head -n 5
+    echo
+done
